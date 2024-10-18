@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest News</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Latest News from {{ source | capitalize }}</h1>
+        
+        <!-- Form for selecting the news source -->
+        <form method="get" class="mb-4">
+            <div class="row">
+                <div class="col-md-10">
+                    <select name="source" class="form-select">
+                        <option value="bbc" {% if source == 'bbc' %}selected{% endif %}>BBC</option>
+                        <option value="cnn" {% if source == 'cnn' %}selected{% endif %}>CNN</option>
+                        <option value="nyt" {% if source == 'nyt' %}selected{% endif %}>New York Times</option>
+                        <option value="jagran_hindi" {% if source == 'jagran_hindi' %}selected{% endif %}>Jagran Hindi</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Displaying the news articles -->
+        <div class="row">
+            {% for article in articles %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ article.title }}</h5>
+                        <p class="card-text">{{ article.summary | truncate(100) }}</p>
+                        <a href="{{ article.link }}" class="btn btn-primary" target="_blank">Read More</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
